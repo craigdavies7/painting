@@ -2,7 +2,7 @@
  * This template takes a single argument, a String containing a
  * message to display.
  *@
-@(message: String)
+@(clients: List[Client])
 
 @*
  * Call the `main` template with two arguments. The first
@@ -11,10 +11,8 @@
  *@
 @main("Welcome to Play") {
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Java")
+  @for(client <- clients) {
+    <li>@client.first_name @client.surname</li>
+  }
 
 }
