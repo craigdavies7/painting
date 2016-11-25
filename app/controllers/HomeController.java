@@ -17,8 +17,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-      List<Client> clients = Client.find().fetch();
-      return ok(index.render(clients));
+        return ok(index.render("Painting Java Application."));
     }
 
 }
