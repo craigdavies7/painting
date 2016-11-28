@@ -6,18 +6,14 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    // Vendor scripts.
+                    // page specific javascript (dev)
                     {
                         expand: true,
-                        cwd: 'bower_components/bootstrap-sass/assets/javascripts/',
-                        src: ['**/*.js'],
-                        dest: 'scripts/bootstrap-sass/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'bower_components/jquery/dist/',
-                        src: ['**/*.js', '**/*.map'],
-                        dest: 'scripts/jquery/'
+                        flatten: true,
+                        src: [
+                            'scripts/pages/*'
+                        ],
+                        dest: 'public/javascripts/pages/'
                     },
 
                     // Fonts.
@@ -27,54 +23,78 @@ module.exports = function (grunt) {
                         flatten: true,
                         cwd: 'bower_components/',
                         src: ['bootstrap-sass/assets/fonts/**'],
-                        dest: 'fonts/'
-                    },
-
-                    // Stylesheets
-                    {
-                        expand: true,
-                        cwd: 'bower_components/bootstrap-sass/assets/stylesheets/',
-                        src: ['**/*.scss'],
-                        dest: 'scss/'
+                        dest: 'public/fonts/'
                     }
                 ]
             },
         },
 
-        // Compile SASS files into minified CSS.
+        // Compile SASS files into minified CSS.       
         sass: {
             options: {
                 includePaths: ['bower_components/bootstrap-sass/assets/stylesheets']
+            },
+            development: {
+                options: {
+                    style: 'expanded',
+                    sourcemap: 'auto'
+                },
+                files: {
+                    'public/stylesheets/main.css': 'scss/main.scss'
+                }
             },
             dist: {
                 options: {
                     outputStyle: 'compressed'
                 },
                 files: {
-                    'css/app.css': 'scss/app.scss'
+                    'public/stylesheets/main.min.css': 'scss/main.scss'
                 }
             }
         },
+        
+        concat: {
+          options: {
+            separator: ';\n',
+          },
+          production: {
+            src: [
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
+                'scripts/main.js'
+            ],
+            dest: 'public/javascripts/main.js'
+          }
+        },
 
-        // Watch these files and notify of changes.
-        watch: {
-            grunt: { files: ['Gruntfile.js'] },
-
-            sass: {
-                files: [
-                    'scss/**/*.scss'
-                ],
-                tasks: ['sass']
+        uglify: {
+            production: {
+            options: {
+                mangle: true,
+                beautify: false,
+                compress: true
+            },
+            files: [
+                {'public/javascripts/main.min.js': 'public/javascripts/main.js'},
+                // minify all page specific javascript
+                {
+                    expand: true,
+                    cwd: 'public/javascripts/pages/',
+                    src: ['*.js', '!*.min.js'],
+                    dest: 'public/javascripts/pages/',
+                    ext: '.min.js'
+                }
+            ]
             }
         }
     });
 
     // Load externally defined tasks. 
     grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Establish tasks we can run from the terminal.
-    grunt.registerTask('build', ['sass', 'copy']);
-    grunt.registerTask('default', ['build', 'watch']);
+    grunt.registerTask('default', ['sass', 'copy', 'concat', 'uglify']);
 }
