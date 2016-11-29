@@ -1,0 +1,21 @@
+{
+  "name": "painting",
+  "homepage": "https://github.com/craigdavies7/painting",
+  "authors": [
+    "Craig Davies <craig281183@hotmail.com>"
+  ],
+  "description": "java app",
+  "main": "Painting",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7"
+  }
+}

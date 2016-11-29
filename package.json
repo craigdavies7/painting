@@ -1,0 +1,30 @@
+{
+  "name": "painting",
+  "version": "1.0.0",
+  "description": "Java App",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craigdavies7/painting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/craigdavies7/painting/issues"
+  },
+  "homepage": "https://github.com/craigdavies7/painting#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^1.2.1"
+  }
+}
