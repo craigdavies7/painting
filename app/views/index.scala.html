@@ -1,8 +1,4 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(clients: List[models.Client])
 
 @*
  * Call the `main` template with two arguments. The first
@@ -11,33 +7,14 @@
  *@
 @main("Welcome to Play") {
 
-    <h2>Testing bootstrap...</h2>
-    <div class="well"
-        <button class="btn btn-success btn-lg">Big ass button</button>
-    </div>
-    
-    <h3>Modal Test</h3>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>     
+    <h1>Showing clients!</h1>
+    <ul>
+        @if(clients.isEmpty()){
+            <li> No clients to display - get some in your mongo db!</li>
+        } else {
+            @for(client <- clients) {
+                <li>@client.name</li>
+            }
+        }
+    </ul>
 }

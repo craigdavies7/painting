@@ -4,6 +4,10 @@ import play.mvc.*;
 
 import views.html.*;
 
+import models.*;
+
+import java.util.List;
+
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -17,7 +21,9 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(index.render("Painting Java Application."));
+        //get all cars
+        List<Client> clients = Client.findAll();
+        return ok(index.render(clients));
     }
 
 }
