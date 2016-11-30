@@ -12597,3 +12597,6 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 ;
+$(document).ready(function(){
+   console.log("Jqauery is up and running!") 
+});
