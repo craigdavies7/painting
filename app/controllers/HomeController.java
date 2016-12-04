@@ -2,8 +2,6 @@ package controllers;
 
 import play.mvc.*;
 
-import views.html.*;
-
 import models.*;
 
 import java.util.List;
@@ -21,9 +19,7 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        //get all cars
-        List<Client> clients = Client.findAll();
-        return ok(index.render(clients));
+        return ok(views.html.home.index.render());
     }
 
 }
