@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.WriteResult;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -35,6 +36,6 @@ public class Client {
 
     // Saves the data in this instance to the mongoDb
     public void save(){
-
+        clients().save(this);
     }
 }
