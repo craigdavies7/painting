@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import play.*;
+import play.data.validation.Constraints;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class Client {
 
     @JsonProperty("_id")
     public ObjectId id;
+
+    @Constraints.Required
     public String name;
 
     public static ArrayList<Client> findAll() {
@@ -28,5 +31,10 @@ public class Client {
             clients.add(client);
         }
         return clients;
+    }
+
+    // Saves the data in this instance to the mongoDb
+    public void save(){
+
     }
 }
