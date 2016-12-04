@@ -37,7 +37,7 @@ public class ClientsController extends Controller {
     public Result create(){
         clientForm = formFactory.form(Client.class).bindFromRequest();
         if (clientForm.hasErrors()){
-            ok(views.html.clients.newClient.render(clientForm));
+            return ok(views.html.clients.newClient.render(clientForm));
         } else {
             // save the data
             Client client = clientForm.get();
@@ -45,6 +45,5 @@ public class ClientsController extends Controller {
             flash("success", "The client was created successfully.");
             return redirect(routes.ClientsController.index());
         }
-        return ok();
     }
 }
