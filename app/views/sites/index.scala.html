@@ -1,0 +1,21 @@
+@(sites: List[models.Site])
+@main("Sites") {
+    <p>
+        <a href="@routes.SitesController.newSite" class="btn btn-success">New Site</a>
+    </p>
+    <h2>Site List</h2>
+    <ul>
+        @if(sites.isEmpty()){
+            <li> No sites to display.</li>
+        } else {
+            @for(site <- sites) {
+                <li>
+                    @site.name -
+                    <a href="@routes.SitesController.edit(site.id)">Edit</a>
+                    |
+                    <a href="@routes.SitesController.delete(site.id)">Delete</a>
+                </li>
+            }
+        }
+    </ul>
+}
