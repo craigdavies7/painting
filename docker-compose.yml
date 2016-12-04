@@ -5,10 +5,12 @@ services:
     build: .
     ports:
      - 9000:9000
+     - 9999:9999
     volumes:
      - .:/code
+     - ~/.ivy2:/root/.ivy2
     stdin_open: true
-    command: bash -c "sbt run"
+    command: bash -c "sbt -jvm-debug 9999 run"
   painting_db:
       container_name: painting_db
       image: mongo:3.0
