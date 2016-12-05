@@ -24,8 +24,7 @@ public class ClientsController extends Controller {
     }
 
     public Result index() {
-        //get all cars
-        List<Client> clients = Client.findAll();
+        List<Client> clients = Client.find(null, "{name: 1}", false);
         return ok(views.html.clients.index.render(clients));
     }
 

@@ -3,7 +3,7 @@
     <p>
         <a href="@routes.SitesController.newSite" class="btn btn-success">New Site</a>
     </p>
-    <h2>Site List</h2>
+    <h2>Site Search</h2>
     <form class="form-inline" action="@routes.SitesController.index()" method="GET">
         <div class="form-group">
             <label class="sr-only" for="search">Search</label>
@@ -11,7 +11,6 @@
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
-    <hr />
     <ul>
         @if(sites.isEmpty()){
             <li> No sites to display.</li>
@@ -22,6 +21,8 @@
                     <a href="@routes.SitesController.edit(site.id)">Edit</a>
                     |
                     <a href="@routes.SitesController.show(site.id)">Show</a>
+                    |
+                    <a href="@routes.SitesController.manageClients(site.id)">Manage Clients</a>
                     |
                     <a href="@routes.SitesController.delete(site.id)">Delete</a>
                 </li>
