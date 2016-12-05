@@ -1,6 +1,7 @@
 package models;
 
 import org.bson.types.ObjectId;
+import org.jongo.Find;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
 import org.jongo.marshall.jackson.oid.MongoId;
@@ -9,7 +10,10 @@ import play.Play;
 import play.data.validation.Constraints;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import static models.Client.clients;
 
 public class Site {
 
@@ -27,14 +31,21 @@ public class Site {
     public String name;
     public String description;
 
-    // returns all sites from the db
-    public static ArrayList<Site> findAll() {
-        MongoCursor<Site> cursor = sites().find().as(Site.class);
-        ArrayList<Site> clients = new ArrayList<Site>();
-        for (Site client: cursor) {
-            clients.add(client);
+    public static ArrayList<Site> search(String searchTerm){
+        Find query;
+        if (searchTerm == null || searchTerm.isEmpty()){
+            query = sites().find();
+        } else {
+            query = sites().find("{$text: {$search: #}}", searchTerm);
         }
-        return clients;
+        query = query.sort("{name: 1}");
+
+        MongoCursor<Site> cursor = query.as(Site.class);
+        ArrayList<Site> sites = new ArrayList<>();
+        for (Site site: cursor) {
+            sites.add(site);
+        }
+        return sites;
     }
 
     // returns the record by the passed id
@@ -59,5 +70,9 @@ public class Site {
 
     public void delete(){
         sites().remove(new ObjectId(this.id));
+    }
+
+    public ArrayList<Client> clients(){
+        return new ArrayList<>();
     }
 }
