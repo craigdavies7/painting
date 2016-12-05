@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Client;
 import models.Site;
 import play.data.Form;
 import play.data.FormFactory;
@@ -8,6 +9,7 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -24,8 +26,10 @@ public class SitesController extends Controller {
     }
 
     public Result index() {
-        List<Site> sites = Site.findAll();
-        return ok(views.html.sites.index.render(sites));
+        String searchTerm = request().getQueryString("search");
+        List<Site> sites = Site.search(searchTerm);
+        if (searchTerm == null) searchTerm = "";
+        return ok(views.html.sites.index.render(sites, searchTerm));
     }
 
     public Result newSite(){
@@ -40,6 +44,14 @@ public class SitesController extends Controller {
         }
         siteForm = siteForm.fill(site);
         return ok(views.html.sites.edit.render(siteForm));
+    }
+
+    public Result show(String id){
+        Site site = Site.findById(id);
+        if (site == null){
+            return notFound();
+        }
+        return ok(views.html.sites.show.render(site));
     }
 
     public Result create(){
@@ -83,5 +95,14 @@ public class SitesController extends Controller {
         site.delete();
         flash("success", "The site was deleted successfully.");
         return redirect(routes.SitesController.index());
+    }
+
+    public Result manageClients(String id){
+        Site site = Site.findById(id);
+        if (site == null){
+            return notFound();
+        }
+        List<Client> clients = site.clients();
+        return ok(views.html.sites.manageClients.render(id, clients));
     }
 }

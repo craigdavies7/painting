@@ -1,0 +1,27 @@
+@(id: String)(clients: List[models.Client])
+@main("Manage Clients") {
+<h2>Associate a Client</h2>
+
+<form class="form-inline" action="@routes.SitesController.manageClients(id)" method="GET">
+    <div class="form-group">
+        <label class="sr-only" for="search">Search</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="search" placeholder="Search for a Client..." name="search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+<h2>Associated Clients</h2>
+<ul>
+    @if(clients.isEmpty()){
+    <li> No clients to display.</li>
+    } else {
+        @for(client <- clients) {
+        <li>
+            @client.name
+        </li>
+        }
+    }
+</ul>
+}
