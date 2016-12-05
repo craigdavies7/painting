@@ -27,7 +27,7 @@ public class SitesController extends Controller {
 
     public Result index() {
         String searchTerm = request().getQueryString("search");
-        List<Site> sites = Site.search(searchTerm);
+        List<Site> sites = Site.search(searchTerm, null, false);
         if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.index.render(sites, searchTerm));
     }
@@ -102,7 +102,10 @@ public class SitesController extends Controller {
         if (site == null){
             return notFound();
         }
-        List<Client> clients = site.clients();
-        return ok(views.html.sites.manageClients.render(id, clients));
+
+        String searchTerm = request().getQueryString("search");
+        List<Client> clients = Client.search(searchTerm, "{name: 1}", true);
+        List<Client> associatedClients = site.clients();
+        return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
     }
 }
