@@ -1,0 +1,16 @@
+painting-st:
+  image: neil121183/painting
+  links:
+    - painting-mongo-st
+  ports:
+   - 80:9000
+  environment:
+    - PAINTING_DB_CONNECTION_STRING=test
+  command: bash -c "sbt run"
+painting-mongo-st:
+    image: mongo:3.0
+    command: mongod --smallfiles --quiet --logpath=/dev/null
+    volumes:
+      - painting_data:/var/lib/mongodb
+    ports:
+      - 27017:27017
