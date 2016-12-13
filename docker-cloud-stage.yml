@@ -1,16 +1,15 @@
-painting-st:
-  image: neil121183/painting
-  links:
-    - painting-mongo-st
+painting_web:
+  build: .
   ports:
    - 80:9000
-  environment:
-    - PAINTING_DB_CONNECTION_STRING=test
-  command: bash -c "sbt run"
-painting-mongo-st:
+  volumes:
+   - .:/code
+   - ~/.ivy2:/root/.ivy2
+  command: bash -c "sbt clean stage && /code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
+painting_db:
     image: mongo:3.0
     command: mongod --smallfiles --quiet --logpath=/dev/null
     volumes:
-      - painting_data:/var/lib/mongodb
+     - painting_data:/var/lib/mongodb
     ports:
-      - 27017:27017
+     - 27017:27017
