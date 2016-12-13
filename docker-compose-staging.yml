@@ -1,0 +1,25 @@
+version: "2"
+services:
+  painting_web:
+    container_name: painting_web
+    build: .
+    ports:
+     - 9000:9000
+     - 9999:9999
+    volumes:
+     - .:/code
+     - ~/.ivy2:/root/.ivy2
+    stdin_open: true
+    entrypoint:
+     - bash -c "sbt clean stage"
+     - bash -c "/code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
+  painting_db:
+      container_name: painting_db
+      image: mongo:3.0
+      command: mongod --smallfiles --quiet --logpath=/dev/null
+      volumes:
+       - painting_data:/var/lib/mongodb
+      ports:
+       - 27017:27017
+volumes:
+  painting_data:
