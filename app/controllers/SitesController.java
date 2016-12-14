@@ -104,6 +104,7 @@ public class SitesController extends Controller {
         }
 
         String searchTerm = request().getQueryString("search");
+        if (searchTerm == null) searchTerm = "";
         List<Client> clients = Client.search(searchTerm, "{name: 1}", true);
         List<Client> associatedClients = site.clients();
         return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
