@@ -1,15 +1,23 @@
-painting_web:
-  build: .
+painting-web:
+  image: neil121183/painting:latest
   ports:
    - 80:9000
-  volumes:
-   - .:/code
-   - ~/.ivy2:/root/.ivy2
+  expose:
+   - "80"
   command: bash -c "sbt clean stage && /code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
-painting_db:
-    image: mongo:3.0
-    command: mongod --smallfiles --quiet --logpath=/dev/null
-    volumes:
-     - painting_data:/var/lib/mongodb
-    ports:
-     - 27017:27017
+  links:
+    - painting-db
+  environment:
+    - PAINTING_MONGO_CONNECTION=mongodb://painting-db:27017/painting
+  volumes:
+    - /home/ubuntu/.ivy2:/root/.ivy2
+    - /home/ubuntu/.sbt:/root/.sbt
+painting-db:
+  image: mongo:3.0
+  command: mongod --smallfiles --quiet --logpath=/dev/null
+  volumes:
+   - /home/ubuntu/mongodb:/var/lib/mongodb
+  ports:
+   - 27017:27017
+  expose:
+    - "27017"
