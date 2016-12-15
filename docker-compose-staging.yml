@@ -4,14 +4,13 @@ services:
     container_name: painting_web
     build: .
     ports:
-      - 9000:9000
-      - 9999:9999
+     - 80:9000
     volumes:
-      - .:/code
-      - ~/.ivy2:/root/.ivy2
-      - ~/.sbt:/root/.sbt
+     - .:/code
+     - ~/.ivy2:/root/.ivy2
+     - ~/.sbt:/root/.sbt
     stdin_open: true
-    command: bash -c "sbt -jvm-debug 9999 run"
+    command: bash -c "sbt clean stage && /code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
     environment:
       - PAINTING_MONGO_CONNECTION=mongodb://painting_db:27017/painting
   painting_db:
@@ -19,9 +18,8 @@ services:
       image: mongo:3.0
       command: mongod --smallfiles --quiet --logpath=/dev/null
       volumes:
-        - painting_data:/var/lib/mongodb
+       - painting_data:/var/lib/mongodb
       ports:
-        - 27017:27017
-
+       - 27017:27017
 volumes:
   painting_data:

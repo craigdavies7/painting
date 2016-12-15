@@ -1,41 +1,23 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mongodb.WriteResult;
-import org.bson.types.ObjectId;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
-import play.*;
 import play.data.validation.Constraints;
-import uk.co.panaxiom.playjongo.PlayJongo;
+import java.util.List;
 
-import java.util.ArrayList;
-
-public class Client {
-
-    public static PlayJongo jongo = Play.application().injector().instanceOf(PlayJongo.class);
-
-    public static MongoCollection clients() {
-        return jongo.getCollection("clients");
-    }
-
-    @JsonProperty("_id")
-    public ObjectId id;
+@Base.CollectionName("clients")
+public class Client extends Base {
 
     @Constraints.Required
     public String name;
 
-    public static ArrayList<Client> findAll() {
-        MongoCursor<Client> cursor = clients().find().as(Client.class);
-        ArrayList<Client> clients = new ArrayList<Client>();
-        for (Client client: cursor) {
-            clients.add(client);
-        }
-        return clients;
+    public static List<Client> find(String queryString, String sortString, boolean emptyDefault){
+        return (List<Client>) Base.find(Client.class, queryString, sortString, emptyDefault);
     }
 
-    // Saves the data in this instance to the mongoDb
-    public void save(){
-        clients().save(this);
+    public static List<Client> search(String searchTerm, String sortString, boolean emptyDefault){
+        return (List<Client>) Base.search(Client.class, searchTerm, sortString, emptyDefault);
+    }
+
+    public static Client findById(String id){
+        return (Client) Base.findById(Client.class, id);
     }
 }
