@@ -8,6 +8,7 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -45,4 +46,32 @@ public class ClientsController extends Controller {
             return redirect(routes.ClientsController.index());
         }
     }
+
+    public Result edit(String id){
+        Client client = Client.findById(id);
+        if (client == null){
+            return notFound();
+        }
+        clientForm = clientForm.fill(client);
+        return ok(views.html.clients.edit.render(clientForm));
+    }
+
+    public Result update(String id){
+        Client client = Client.findById(id);
+        if (client == null){
+            return notFound();
+        }
+        clientForm = formFactory.form(Client.class).bindFromRequest();
+        if (clientForm.hasErrors()){
+            return ok(views.html.clients.edit.render(clientForm));
+        } else {
+            Client updatedClient = clientForm.get();
+            updatedClient.id = client.id;
+            updatedClient.save();
+            flash("success", "The client was updated successfully.");
+            return redirect(routes.ClientsController.index());
+        }
+    }
 }
+
+

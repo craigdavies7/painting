@@ -1,0 +1,9 @@
+@(site: models.Site)
+@main("Showing Site") {
+    <dl>
+        <dt>Name:</dt>
+        <dd>@site.name</dd>
+        <dt>Description:</dt>
+        <dd>@Html(site.description)</dd>
+    </dl>
+}
