@@ -14,7 +14,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get install -y nodejs \
     build-essential
 ENV SBT_OPTS "${SBT_OPTS} -Dsbt.jse.engineType=Node"
-
+ENV JAVA_OPTS "${JAVA_OPTS} -Xmx128m -XX:-UseConcMarkSweepGC -XX:+UseG1GC -XX:+UseStringDeduplication"
 RUN mkdir -p /code
 
 COPY . /code
