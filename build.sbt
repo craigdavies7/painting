@@ -1,6 +1,10 @@
+import com.typesafe.config._
+
+val conf = ConfigFactory.parseFile(new File("conf/application.conf")).resolve()
+
 name := """painting"""
 
-version := "1.0-SNAPSHOT"
+version := conf.getString("app.version")
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, JavaServerAppPackaging)
 
