@@ -2,10 +2,7 @@ version: "2"
 services:
   painting_web:
     container_name: painting_web
-    build:
-      context: .
-      args:
-        BUILD_ENV: production
+    build: .
     ports:
      - 80:9000
     stdin_open: true
