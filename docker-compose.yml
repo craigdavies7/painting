@@ -2,7 +2,10 @@ version: "2"
 services:
   painting_web:
     container_name: painting_web
-    build: .
+    build:
+      context: .
+      args:
+        BUILD_ENV: debug
     ports:
      - 9000:9000
      - 9999:9999

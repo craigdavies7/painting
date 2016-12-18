@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-ARG BUILD_ENV=debug
+ARG BUILD_ENV=production
 
 # SBT
 RUN apt-get -yqq update && apt-get -yqq install \
