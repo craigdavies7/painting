@@ -11,7 +11,6 @@ services:
     stdin_open: true
     command: bash -c "/code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
     environment:
-      - PAINTING_BUILD_ENVIRONMENT=production
       - PAINTING_MONGO_CONNECTION=mongodb://painting_db:27017/painting
   painting_db:
       container_name: painting_db
