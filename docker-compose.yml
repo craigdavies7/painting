@@ -12,8 +12,11 @@ services:
     volumes:
      - .:/code
      - ~/.ivy2:/root/.ivy2
+     - ~/.sbt:/root/.sbt
     stdin_open: true
     command: bash -c "sbt -jvm-debug 9999 run"
+    environment:
+      - PAINTING_MONGO_CONNECTION=mongodb://painting_db:27017/painting
   painting_db:
     container_name: painting_db
     image: mongo:3.0

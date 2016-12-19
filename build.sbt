@@ -22,3 +22,6 @@ libraryDependencies ++= Seq(
 publishArtifact in (Compile, packageDoc) := false
 
 publishArtifact in (Compile, packageSrc) := false
+
+// Import the helpers into all templates
+TwirlKeys.templateImports += "helpers._"
