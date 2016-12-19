@@ -11,101 +11,117 @@
     <header></header>
     <main role="main">
       <div class="container">
-        <h1 class="page-header">Painting Templates</h1>
+        <div class="jumbotron">
+          <h1>Painting Templates</h1>
+          <p>
+            This is a collection of different controls used across this application.
+            We can design them here (as it's faster to refresh), and ensure we maintain a
+            standard look and feel across the app.
+          </p>
+          <h3>Table of Contents</h3>
+          <ul class="unstyled">
+            <li><a href="#flash-messages">Flash Messages</a></li>
+            <li><a href="#index">Index Pages</a></li>
+            <li><a href="#forms">Forms</a></li>
+            <li><a href="#footer">Footer</a></li>
+          </ul>
+        </div>
+        <h1 class="page-header" id="flash-messages">Flash Messages</h1>
         <div class="alert alert-success">
           This is an example Flash Message.
         </div>
-        <h2 id="index">Index Pages</h2>
-        <div class="panel panel-default">
-          <div class="panel-heading">Search Things</div>
-          <div class="panel-body">
-            <div class="col-sm-10">
-              <form class="form-inline">
-                <label class="sr-only">Search</label>
-                <div class="input-group">
-                  <input type="text" placeholder="Search..." class="form-control">
-                  <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">
-                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                  </span>
-                </div>
-              </form>
+        <h1 class="page-header" id="index">Index Pages</h1>
+        <div class="well">
+          <button type="button" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+            &nbsp;Add Record
+          </button>
+          <form class="form-inline pull-right-sm">
+            <label class="sr-only">Search</label>
+            <div class="input-group">
+              <input type="text" placeholder="Search..." class="form-control">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+              </span>
             </div>
-            <div class="col-sm-2">
-              <button type="button" class="btn btn-success list-button">Add</button>
+          </form>
+        </div>
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <h4 class="list-group-item-heading">Record Title 1</h4>
+                <p class="list-group-item-text">Record summary.</p>
+              </div>
+              <div class="col-sm-2">
+                <div class="btn-group pull-right-sm">
+                  <button type="button" class="btn btn-success">View</button>
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Edit</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Delete</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="list-group">
-            <div class="list-group-item">
-              <div class="row">
-                <div class="col-sm-10">
-                  <h4 class="list-group-item-heading">Record Title 1</h4>
-                  <p class="list-group-item-text">Record summary.</p>
-                </div>
-                <div class="col-sm-2">
-                  <div class="btn-group list-button">
-                    <button type="button" class="btn btn-success">View</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Edit</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="#">Delete</a></li>
-                    </ul>
-                  </div>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <h4 class="list-group-item-heading">Record Title 2</h4>
+                <p class="list-group-item-text">Record summary.</p>
+              </div>
+              <div class="col-sm-2">
+                <div class="btn-group pull-right-sm">
+                  <button type="button" class="btn btn-success">View</button>
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Edit</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Delete</a></li>
+                  </ul>
                 </div>
               </div>
             </div>
-            <div class="list-group-item">
-              <div class="row">
-                <div class="col-sm-10">
-                  <h4 class="list-group-item-heading">Record Title 2</h4>
-                  <p class="list-group-item-text">Record summary.</p>
-                </div>
-                <div class="col-sm-2">
-                  <div class="btn-group list-button">
-                    <button type="button" class="btn btn-success">View</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Edit</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="#">Delete</a></li>
-                    </ul>
-                  </div>
-                </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-sm-10">
+                <h4 class="list-group-item-heading">Record Title 3</h4>
+                <p class="list-group-item-text">Record summary.</p>
               </div>
-            </div>
-            <div class="list-group-item">
-              <div class="row">
-                <div class="col-sm-10">
-                  <h4 class="list-group-item-heading">Record Title 3</h4>
-                  <p class="list-group-item-text">Record summary.</p>
-                </div>
-                <div class="col-sm-2">
-                  <div class="btn-group list-button">
-                    <button type="button" class="btn btn-success">View</button>
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Edit</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="#">Delete</a></li>
-                    </ul>
-                  </div>
+              <div class="col-sm-2">
+                <div class="btn-group pull-right-sm">
+                  <button type="button" class="btn btn-success">View</button>
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Edit</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Delete</a></li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <h2 id="forms">Forms</h2>
+        <div class="list-group">
+          <div class="list-group-item">
+            <h4>No results.</h4>
+          </div>
+        </div>
+        <h1 class="page-header" id="forms">Forms</h1>
         <p>
           <a href="#">Back</a>
           |
@@ -133,6 +149,7 @@
             <a href="#">Back</a>
           </p>
         </form>
+        <h1 class="page-header" id="footer">Footer</h1>
         <footer>
           <p>
             <strong>Application Version:</strong>
