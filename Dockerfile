@@ -18,7 +18,7 @@ RUN apt-get install -y nodejs \
 ENV SBT_OPTS "${SBT_OPTS} -Dsbt.jse.engineType=Node"
 ENV JAVA_OPTS "${JAVA_OPTS} -Xmx256m -XX:-UseConcMarkSweepGC -XX:+UseG1GC -XX:+UseStringDeduplication"
 
-ENV PAINTING_APP_VERSION "0.1.0"
+ENV PAINTING_APP_VERSION "0.1.1"
 
 RUN mkdir -p /code
 COPY . /code
