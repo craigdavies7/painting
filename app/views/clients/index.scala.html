@@ -14,9 +14,32 @@
         @if(clients.isEmpty()){
             <li> No clients to display - get some in your mongo db!</li>
         } else {
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
             @for(client <- clients) {
-                <li>@client.name</li>
+            <tbody>
+            <tr>
+                <td>@client.name</td>
+                <td>
+                    |
+                    <a href="@routes.ClientsController.edit(client.id)">Edit</a>
+                    |
+                    <a href="@routes.ClientsController.show(client.id)">Show</a>
+                    |
+                    <a href="@routes.ClientsController.delete(client.id)">Delete</a>
+                    |
+                </td>
+            </tbody>
             }
         }
+        </table>
     </ul>
+<p>
+    <a href="@routes.HomeController.index()">Back to HomePage</a>
+</p>
 }
