@@ -238,8 +238,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("/assets/fonts/glyphicons-halflings-regular.eot");
+  src: url("/assets/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("/assets/fonts/glyphicons-halflings-regular.woff") format("woff"), url("/assets/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("/assets/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -5813,3 +5813,11 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+
+/* Small devices (tablets, 768px and up) */
+.pull-right-sm {
+  margin-top: 10px; }
+  @media (min-width: 768px) {
+    .pull-right-sm {
+      float: right;
+      margin-top: inherit; } }

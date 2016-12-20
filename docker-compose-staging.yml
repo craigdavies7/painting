@@ -5,12 +5,8 @@ services:
     build: .
     ports:
      - 80:9000
-    volumes:
-     - .:/code
-     - ~/.ivy2:/root/.ivy2
-     - ~/.sbt:/root/.sbt
     stdin_open: true
-    command: bash -c "sbt clean stage && /code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
+    command: bash -c "/code/target/universal/painting -Dconfig.file=/code/conf/application-prod.conf"
     environment:
       - PAINTING_MONGO_CONNECTION=mongodb://painting_db:27017/painting
   painting_db:
