@@ -25,3 +25,4 @@ server.pid
 /node_modules
 .ivy2/
 .sbt/
+out/
