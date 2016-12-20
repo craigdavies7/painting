@@ -9,6 +9,9 @@ GET     /clients/new                controllers.ClientsController.newClient
 POST    /clients                    controllers.ClientsController.create
 GET     /clients/:id/edit           controllers.ClientsController.edit(id: String)
 POST    /clients/:id                controllers.ClientsController.update(id: String)
+GET     /client/:id                 controllers.ClientsController.show(id: String)
+GET     /client/:id/delete          controllers.ClientsController.delete(id: String)
+
 
 GET     /sites                      controllers.SitesController.index
 GET     /sites/new                  controllers.SitesController.newSite

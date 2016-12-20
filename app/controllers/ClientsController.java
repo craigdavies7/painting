@@ -72,6 +72,25 @@ public class ClientsController extends Controller {
             return redirect(routes.ClientsController.index());
         }
     }
+
+    public Result show(String id)
+    {
+        Client client = Client.findById(id);
+        if (client == null){
+            return notFound();
+        }
+        return ok(views.html.clients.show.render(client));
+    }
+
+    public Result delete(String id){
+        Client client = Client.findById(id);
+        if (client == null){
+            return notFound();
+        }
+        client.delete();
+        flash("success", "The client was deleted successfully.");
+        return redirect(routes.ClientsController.index());
+    }
 }
 
 
