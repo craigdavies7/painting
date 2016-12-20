@@ -1,1 +1,12 @@
+$icon-font-path: "/assets/fonts/";
+
 @import "bootstrap";
+
+/* Small devices (tablets, 768px and up) */
+.pull-right-sm {
+  margin-top: 10px;
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    margin-top: inherit;
+  }
+}

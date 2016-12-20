@@ -4,14 +4,11 @@ painting-web:
    - 80:9000
   expose:
    - "80"
-  command: bash -c "sbt clean stage && /code/target/universal/stage/bin/painting -Dconfig.file=/code/conf/application-prod.conf"
+  command: bash -c "/code/target/universal/painting -Dconfig.file=/code/conf/application-prod.conf"
   links:
     - painting-db
   environment:
     - PAINTING_MONGO_CONNECTION=mongodb://painting-db:27017/painting
-  volumes:
-    - /home/ubuntu/.ivy2:/root/.ivy2
-    - /home/ubuntu/.sbt:/root/.sbt
 painting-db:
   image: mongo:3.0
   command: mongod --smallfiles --quiet --logpath=/dev/null

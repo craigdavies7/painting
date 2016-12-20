@@ -1,5 +1,7 @@
 FROM openjdk:8
 
+ARG BUILD_ENV=production
+
 # SBT
 RUN apt-get -yqq update && apt-get -yqq install \
     apt-transport-https \
@@ -14,11 +16,16 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get install -y nodejs \
     build-essential
 ENV SBT_OPTS "${SBT_OPTS} -Dsbt.jse.engineType=Node"
-ENV JAVA_OPTS "${JAVA_OPTS} -Xmx128m -XX:-UseConcMarkSweepGC -XX:+UseG1GC -XX:+UseStringDeduplication"
-RUN mkdir -p /code
+ENV JAVA_OPTS "${JAVA_OPTS} -Xmx256m -XX:-UseConcMarkSweepGC -XX:+UseG1GC -XX:+UseStringDeduplication"
 
+ENV PAINTING_APP_VERSION "0.1.1"
+
+RUN mkdir -p /code
 COPY . /code
 WORKDIR /code
 
+# If we're in production mode, build the app
+# RUN if [ "$BUILD_ENV" = "production" ]; then sbt clean stage; fi
+RUN if [ "$BUILD_ENV" = "production" ]; then bash -c "sbt universal:packageZipTarball -v && tar xzf /code/target/universal/painting-$PAINTING_APP_VERSION.tgz -C /code/target/universal/ &&  ln -sf /code/target/universal/painting-$PAINTING_APP_VERSION/bin/painting /code/target/universal/painting"; fi
+
 EXPOSE 9000
-EXPOSE 9999

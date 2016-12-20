@@ -23,3 +23,5 @@ server.pid
 .cache
 /bower_components
 /node_modules
+.ivy2/
+.sbt/
