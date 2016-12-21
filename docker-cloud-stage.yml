@@ -1,14 +1,13 @@
 painting-web:
   image: neil121183/painting:latest
-  ports:
-   - 80:9000
   expose:
-   - "80"
+    - "9000"
   command: bash -c "/code/target/universal/painting -Dconfig.file=/code/conf/application-prod.conf"
   links:
     - painting-db
   environment:
     - PAINTING_MONGO_CONNECTION=mongodb://painting-db:27017/painting
+
 painting-db:
   image: mongo:3.0
   command: mongod --smallfiles --quiet --logpath=/dev/null
@@ -16,5 +15,14 @@ painting-db:
    - /home/ubuntu/mongodb:/var/lib/mongodb
   ports:
    - 27017:27017
-  expose:
-    - "27017"
+
+painting-lb:
+  image: dockercloud/haproxy
+  links:
+    - painting-web
+  environment:
+    - 'HTTP_BASIC_AUTH=santa:secret'
+  ports:
+    - 80:80
+  roles:
+    - global
