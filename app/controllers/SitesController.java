@@ -2,12 +2,14 @@ package controllers;
 
 import models.Client;
 import models.Site;
+import org.jongo.MongoCursor;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class SitesController extends Controller {
 
     public Result index() {
         String searchTerm = request().getQueryString("search");
-        List<Site> sites = Site.search(searchTerm, null, false);
+        List<Site> sites = Site.search(searchTerm, null);
         if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.index.render(sites, searchTerm));
     }
@@ -97,16 +99,20 @@ public class SitesController extends Controller {
         return redirect(routes.SitesController.index());
     }
 
-    public Result manageClients(String id){
+    public Result manageClients(String id) {
         Site site = Site.findById(id);
-        if (site == null){
+        if (site == null) {
             return notFound();
         }
 
         String searchTerm = request().getQueryString("search");
-        if (searchTerm == null) searchTerm = "";
-        List<Client> clients = Client.search(searchTerm, "{name: 1}", true);
-        List<Client> associatedClients = site.clients();
+        List<Client> clients = new ArrayList<>();
+        if (searchTerm != null){
+            clients = Client.search(searchTerm, "{name: 1}");
+        } else {
+            searchTerm = "";
+        }
+        List<Client> associatedClients = site.clients("{name: 1}");
         return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
     }
 }

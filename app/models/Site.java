@@ -1,34 +1,37 @@
 package models;
 
+import org.jongo.MongoCollection;
 import play.data.validation.Constraints;
 import java.util.List;
-
+@SuppressWarnings("unchecked")
 @Base.CollectionName("sites")
 public class Site extends Base {
 
     @Constraints.Required
     public String name;
     public String description;
-    public List<int> clientIds;
+    public List<Integer> clientIds;
 
-    public static List<Site> find(String queryString, String sortString, boolean emptyDefault){
-        return (List<Site>) Base.find(Site.class, queryString, sortString, emptyDefault);
-    }
+    public static MongoCollection sitesCollection = Base.getCollection(Site.class);
 
-    public static List<Site> search(String searchTerm, String sortString, boolean emptyDefault){
-        return (List<Site>) Base.search(Site.class, searchTerm, sortString, emptyDefault);
+    public static List<Site> search(String searchTerm, String sortString){
+        // can't use full text search until the mongo index stuff is sorted
+        // https://github.com/neilwilliams/painting/issues/24
+        if (searchTerm == null) searchTerm = "";
+        return (List<Site>) Base.toList(sitesCollection.
+                find("{name: {$regex: #, $options: 'i'}}", searchTerm).
+                sort(sortString).
+                as(Site.class));
     }
 
     public static Site findById(String id){
         return (Site) Base.findById(Site.class, id);
     }
 
-    public List<Client> clients(){
-      // something like this?  But converting it to a string like this is rubbish
-      // string clientIds = this.clientIds.toString();
-      // return Client.find("{'id': {$in: clientIds}}", "{"name": 1}", true);
-
-      // We need a way to pass through the dynamic query values through to the find method
-      // so Base.find needs some work
+    public List<Client> clients(String sortString){
+        // Craig, I've started this for you, this returns all clients.
+        // You need to change this to bring back only the associated clients
+        // to this site, making using of the clientIds property of this class.
+      return (List<Client>) Base.toList(Client.clientsCollection.find().sort(sortString).as(Client.class));
     }
 }
