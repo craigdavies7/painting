@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Client;
+import org.jongo.MongoCursor;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -25,7 +26,7 @@ public class ClientsController extends Controller {
     }
 
     public Result index() {
-        List<Client> clients = Client.find(null, "{name: 1}", false);
+        List<Client> clients = Client.findAll("{name: 1}");
         return ok(views.html.clients.index.render(clients));
     }
 
@@ -35,7 +36,7 @@ public class ClientsController extends Controller {
     }
 
     public Result create(){
-        clientForm = formFactory.form(Client.class).bindFromRequest();
+        clientForm = clientForm.bindFromRequest();
         if (clientForm.hasErrors()){
             return ok(views.html.clients.newClient.render(clientForm));
         } else {
