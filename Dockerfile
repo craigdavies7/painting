@@ -25,7 +25,6 @@ COPY . /code
 WORKDIR /code
 
 # If we're in production mode, build the app
-# RUN if [ "$BUILD_ENV" = "production" ]; then sbt clean stage; fi
 RUN if [ "$BUILD_ENV" = "production" ]; then bash -c "sbt universal:packageZipTarball -v && tar xzf /code/target/universal/painting-$PAINTING_APP_VERSION.tgz -C /code/target/universal/ &&  ln -sf /code/target/universal/painting-$PAINTING_APP_VERSION/bin/painting /code/target/universal/painting"; fi
 
 EXPOSE 9000

@@ -55,7 +55,7 @@ public class SitesController extends Controller {
     }
 
     public Result create(){
-        siteForm = formFactory.form(Site.class).bindFromRequest();
+        siteForm = siteForm.bindFromRequest();
         if (siteForm.hasErrors()){
             return ok(views.html.sites.newSite.render(siteForm));
         } else {
