@@ -10,19 +10,18 @@
         <a href="@routes.ClientsController.newClient" class="btn btn-success">New Client</a>
     </p>
     <h2>Client List</h2>
-    <ul>
-        @if(clients.isEmpty()){
-            <li> No clients to display - get some in your mongo db!</li>
-        } else {
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Client Name</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            @for(client <- clients) {
-            <tbody>
+    @if(clients.isEmpty()){
+        <p>No clients to display - get some in your mongo db!</p>
+    } else {
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Client Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(client <- clients) {
             <tr>
                 <td>@client.name</td>
                 <td>
@@ -34,12 +33,12 @@
                     <a href="@routes.ClientsController.delete(client.id)">Delete</a>
                     |
                 </td>
-            </tbody>
-            }
+            </tr>
         }
-        </table>
-    </ul>
-<p>
-    <a href="@routes.HomeController.index()">Back to HomePage</a>
-</p>
+        </tbody>
+    }
+    </table>
+    <p>
+        <a href="@routes.HomeController.index()">Back to HomePage</a>
+    </p>
 }
