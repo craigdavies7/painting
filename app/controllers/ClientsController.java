@@ -35,7 +35,7 @@ public class ClientsController extends Controller {
     }
 
     public Result create(){
-        clientForm = formFactory.form(Client.class).bindFromRequest();
+        clientForm = clientForm.bindFromRequest();
         if (clientForm.hasErrors()){
             return ok(views.html.clients.newClient.render(clientForm));
         } else {
