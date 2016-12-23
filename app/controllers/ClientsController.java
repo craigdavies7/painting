@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Client;
+import models.dao.ClientDao;
 import org.jongo.MongoCursor;
 import play.data.Form;
 import play.data.FormFactory;
@@ -18,15 +19,17 @@ import java.util.Map;
 public class ClientsController extends Controller {
     private FormFactory formFactory;
     private Form<Client> clientForm;
+    private ClientDao clientDao;
 
     @Inject
-    public ClientsController(FormFactory formFactory){
+    public ClientsController(FormFactory formFactory, ClientDao clientDao){
         this.formFactory = formFactory;
         this.clientForm = formFactory.form(Client.class);
+        this.clientDao = clientDao;
     }
 
     public Result index() {
-        List<Client> clients = Client.findAll("{name: 1}");
+        List<Client> clients = clientDao.findAll("{name: 1}");
         return ok(views.html.clients.index.render(clients));
     }
 
@@ -42,14 +45,14 @@ public class ClientsController extends Controller {
         } else {
             // save the data
             Client client = clientForm.get();
-            client.save();
+            clientDao.save(client);
             flash("success", "The client was created successfully.");
             return redirect(routes.ClientsController.index());
         }
     }
 
     public Result edit(String id){
-        Client client = Client.findById(id);
+        Client client = clientDao.findById(id);
         if (client == null){
             return notFound();
         }
@@ -58,7 +61,7 @@ public class ClientsController extends Controller {
     }
 
     public Result update(String id){
-        Client client = Client.findById(id);
+        Client client = clientDao.findById(id);
         if (client == null){
             return notFound();
         }
@@ -68,7 +71,7 @@ public class ClientsController extends Controller {
         } else {
             Client updatedClient = clientForm.get();
             updatedClient.id = client.id;
-            updatedClient.save();
+            clientDao.save(updatedClient);
             flash("success", "The client was updated successfully.");
             return redirect(routes.ClientsController.index());
         }
@@ -76,7 +79,7 @@ public class ClientsController extends Controller {
 
     public Result show(String id)
     {
-        Client client = Client.findById(id);
+        Client client = (Client) clientDao.findById(id);
         if (client == null){
             return notFound();
         }
@@ -84,11 +87,11 @@ public class ClientsController extends Controller {
     }
 
     public Result delete(String id){
-        Client client = Client.findById(id);
+        Client client = (Client) clientDao.findById(id);
         if (client == null){
             return notFound();
         }
-        client.delete();
+        clientDao.delete(client);
         flash("success", "The client was deleted successfully.");
         return redirect(routes.ClientsController.index());
     }
