@@ -9,6 +9,7 @@ public class Client extends Base {
 
     @Constraints.Required
     public String name;
+    public String siteId;
 
     public static MongoCollection clientsCollection = Base.getCollection(Client.class);
 
