@@ -2,12 +2,10 @@ package models.dao;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import models.Base;
 import models.Client;
-import org.bson.types.ObjectId;
-import play.data.validation.Constraints;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -29,13 +27,23 @@ public class ClientDao extends BaseDao {
         return (Client) findById(Client.class, id);
     }
 
-    public List<Client> search(String searchTerm, String sortString){
-        // can't use full text search until the mongo index stuff is sorted
-        // https://github.com/neilwilliams/painting/issues/24
-        return (List<Client>) BaseDao.toList(mongoCollection.
-            find("{name: {$regex: #, $options: 'i'}}", searchTerm).
-            sort(sortString).
-            as(Client.class)
-        );
+    public List<Client> searchOrAll(String searchTerm, String sortString){
+        List<Client> results = (List<Client>) search(Client.class, searchTerm, sortString);
+        if (results == null){
+            // when no search is performed, we want to return all records
+            return findAll(sortString);
+        } else {
+            return results;
+        }
+    }
+
+    public List<Client> searchOrNone(String searchTerm, String sortString){
+        List<Client> results = (List<Client>) search(Client.class, searchTerm, sortString);
+        if (results == null){
+            // when no search is performed, return an empty list
+            return  new ArrayList<>();
+        } else {
+            return results;
+        }
     }
 }

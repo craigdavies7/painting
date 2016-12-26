@@ -1,4 +1,4 @@
-@(clients: List[models.Client])
+@(clients: List[models.Client])(searchText: String)
 
 @*
  * Call the `main` template with two arguments. The first
@@ -9,36 +9,42 @@
     <p>
         <a href="@routes.ClientsController.newClient" class="btn btn-success">New Client</a>
     </p>
-    <h2>Client List</h2>
+    <form class="form-inline" action="@routes.ClientsController.index()" method="GET">
+        <div class="form-group">
+            <label class="sr-only" for="search">Search</label>
+            <input type="text" class="form-control" id="search" placeholder="Search for a Client..." name="search" value="@searchText">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
     @if(clients.isEmpty()){
-        <p>No clients to display - get some in your mongo db!</p>
+        <p>No clients to display.</p>
     } else {
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Client Name</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        @for(client <- clients) {
-            <tr>
-                <td>@client.name</td>
-                <td>
-                    |
-                    <a href="@routes.ClientsController.edit(client.id)">Edit</a>
-                    |
-                    <a href="@routes.ClientsController.show(client.id)">Show</a>
-                    |
-                    <a href="@routes.ClientsController.delete(client.id)">Delete</a>
-                    |
-                </td>
-            </tr>
-        }
-        </tbody>
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(client <- clients) {
+                    <tr>
+                        <td>@client.name</td>
+                        <td>
+                            |
+                            <a href="@routes.ClientsController.edit(client.id)">Edit</a>
+                            |
+                            <a href="@routes.ClientsController.show(client.id)">Show</a>
+                            |
+                            <a href="@routes.ClientsController.delete(client.id)">Delete</a>
+                            |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
-    </table>
     <p>
-        <a href="@routes.HomeController.index()">Back to HomePage</a>
+        <a href="@routes.HomeController.index()">Back to Home Page</a>
     </p>
 }

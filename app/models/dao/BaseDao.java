@@ -3,6 +3,7 @@ package models.dao;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.Base;
+import models.Client;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import org.jongo.MongoCursor;
@@ -65,6 +66,20 @@ public class BaseDao {
             return mongoCollection.findOne(new ObjectId(id)).as(baseClass);
         }
         return null;
+    }
+
+    public List<?> search(Class<?> baseClass, String searchTerm, String sortString) {
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            // no search term, so let the calling method decide what happens now
+            // e.g if results are null, then either return an empty list, or all records
+            return null;
+        } else {
+            return BaseDao.toList(mongoCollection.
+                    find("{$text: {$search: #}}", searchTerm).
+                    sort(sortString).
+                    as(baseClass)
+            );
+        }
     }
 
     // Saves the data in this instance to the mongoDb

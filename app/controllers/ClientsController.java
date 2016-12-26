@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Client;
+import models.Site;
 import models.dao.ClientDao;
 import org.jongo.MongoCursor;
 import play.data.Form;
@@ -29,8 +30,10 @@ public class ClientsController extends Controller {
     }
 
     public Result index() {
-        List<Client> clients = clientDao.findAll("{name: 1}");
-        return ok(views.html.clients.index.render(clients));
+        String searchTerm = request().getQueryString("search");
+        List<Client> clients = clientDao.searchOrAll(searchTerm, "{name: 1}");
+        if (searchTerm == null) searchTerm = "";
+        return ok(views.html.clients.index.render(clients, searchTerm));
     }
 
     public Result newClient(){
@@ -79,7 +82,7 @@ public class ClientsController extends Controller {
 
     public Result show(String id)
     {
-        Client client = (Client) clientDao.findById(id);
+        Client client = clientDao.findById(id);
         if (client == null){
             return notFound();
         }
@@ -87,7 +90,7 @@ public class ClientsController extends Controller {
     }
 
     public Result delete(String id){
-        Client client = (Client) clientDao.findById(id);
+        Client client = clientDao.findById(id);
         if (client == null){
             return notFound();
         }

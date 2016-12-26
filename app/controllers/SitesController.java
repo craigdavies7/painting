@@ -35,7 +35,7 @@ public class SitesController extends Controller {
 
     public Result index() {
         String searchTerm = request().getQueryString("search");
-        List<Site> sites = siteDao.search(searchTerm, null);
+        List<Site> sites = siteDao.search(searchTerm, "{name: 1}");
         if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.index.render(sites, searchTerm));
     }
@@ -46,7 +46,7 @@ public class SitesController extends Controller {
     }
 
     public Result edit(String id){
-        Site site = (Site) siteDao.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -55,7 +55,7 @@ public class SitesController extends Controller {
     }
 
     public Result show(String id){
-        Site site = (Site) siteDao.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -76,7 +76,7 @@ public class SitesController extends Controller {
     }
 
     public Result update(String id){
-        Site site = (Site) siteDao.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -96,7 +96,7 @@ public class SitesController extends Controller {
     }
 
     public Result delete(String id){
-        Site site = (Site) siteDao.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -112,13 +112,9 @@ public class SitesController extends Controller {
         }
 
         String searchTerm = request().getQueryString("search");
-        List<Client> clients = new ArrayList<>();
-        if (searchTerm != null){
-            clients = clientDao.search(searchTerm, "{name: 1}");
-        } else {
-            searchTerm = "";
-        }
+        List<Client> clients = clientDao.searchOrNone(searchTerm, "{name: 1}");
         List<Client> associatedClients = siteDao.clients("{name: 1}");
+        if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
     }
 }
