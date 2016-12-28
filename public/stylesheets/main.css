@@ -3914,11 +3914,11 @@ tbody.collapse.in {
     margin-top: 14px;
     margin-bottom: 14px; }
 
-.navbar-text {
+.navbar-text, footer .navbar-text {
   margin-top: 15px;
   margin-bottom: 15px; }
   @media (min-width: 768px) {
-    .navbar-text {
+    .navbar-text, footer .navbar-text {
       float: left;
       margin-left: 15px;
       margin-right: 15px; } }
@@ -5814,13 +5814,20 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+body {
+  padding-top: 70px; }
+
 /* Small devices (tablets, 768px and up) */
-.pull-right-sm {
-  margin-top: 10px; }
-  @media (min-width: 768px) {
-    .pull-right-sm {
-      float: right;
-      margin-top: inherit; } }
+@media (min-width: 768px) {
+  .pull-right-sm {
+    float: right; } }
 
 .table th.actions {
   min-width: 100px; }
+
+footer .navbar {
+  margin-bottom: 0; }
+
+footer .navbar-text {
+  margin-left: 0;
+  margin-right: 0; }
