@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Painting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+    <script src="/assets/javascripts/main.js" type="text/javascript"></script>
+
+    <link id="forms_link" rel="import" href="templates/_forms.html">
+    <link id="lists_link" rel="import" href="templates/_lists.html">
+    <link id="lists_link" rel="import" href="templates/_misc.html">
+  </head>
+  <body>
+    <header></header>
+    <main role="main">
+      <div class="container">
+        <div class="jumbotron">
+          <h1>Painting Templates</h1>
+          <p>
+            This is a collection of different controls used across this application. We can design them here (as it's faster to refresh), and ensure we maintain a standard look and feel across the app.
+          </p>
+          <h3>Table of Contents</h3>
+          <ul class="unstyled">
+            <li>
+              <a href="#flash-messages">Flash Messages</a>
+            </li>
+            <li>
+              <a href="#index">Index Pages</a>
+            </li>
+            <li>
+              <a href="#forms">Forms</a>
+            </li>
+            <li>
+              <a href="#footer">Footer</a>
+            </li>
+          </ul>
+        </div>
+        <div id="content_container"></div>
+      </div>
+    </main>
+    <footer>
+      <div class="row well">
+        <div class="col-sm-6">
+          <strong>Creation Software</strong><br />
+          Copyright &copy; 2016
+        </div>
+        <div class="col-sm-6">
+          <span class="pull-right-sm">
+            <strong>Application Version:</strong>
+            1.0.0
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      // Taken from https://www.html5rocks.com/en/tutorials/webcomponents/imports/ But converted to jquery as I love it.
+      var links = $("link[rel='import']");
+      var content = null;
+      links.each(function (i, link) {
+        content = $(link.import);
+        $("#content_container").append(content.find(".child_content").clone());
+      });
+    </script>
+  </body>
+</html>

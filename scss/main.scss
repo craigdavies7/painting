@@ -10,3 +10,10 @@ $icon-font-path: "/assets/fonts/";
     margin-top: inherit;
   }
 }
+
+// Do not wrap btn groups inside tables
+.table {
+  th.actions {
+    min-width: 100px;
+  }
+}

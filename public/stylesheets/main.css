@@ -5821,3 +5821,6 @@ button.close {
     .pull-right-sm {
       float: right;
       margin-top: inherit; } }
+
+.table th.actions {
+  min-width: 100px; }
