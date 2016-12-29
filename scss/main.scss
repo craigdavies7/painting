@@ -2,11 +2,30 @@ $icon-font-path: "/assets/fonts/";
 
 @import "bootstrap";
 
+body { padding-top: 70px; }
+
 /* Small devices (tablets, 768px and up) */
 .pull-right-sm {
-  margin-top: 10px;
   @media (min-width: $screen-sm-min) {
     float: right;
-    margin-top: inherit;
+  }
+}
+
+// Do not wrap btn groups inside tables
+.table {
+  th.actions {
+    min-width: 100px;
+  }
+}
+
+footer {
+  .navbar {
+    margin-bottom: 0;
+  }
+
+  .navbar-text {
+    @extend .navbar-text;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
