@@ -1,0 +1,10 @@
+common.actions=Actions
+common.delete=Delete
+common.edit=Edit
+common.show=Show
+common.noRecords=No records to display.
+
+client.attributes.name=Client Name
+client.new=New Client
+client.edit=Edit Client
+client.index=Clients

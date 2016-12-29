@@ -1,23 +1,16 @@
 @(clients: List[models.Client])
-
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Clients") {
+@main(Messages("client.index")) {
     <p>
-        <a href="@routes.ClientsController.newClient" class="btn btn-success">New Client</a>
+        <a href="@routes.ClientsController.newClient" class="btn btn-success">@Messages("client.new")</a>
     </p>
-    <h2>Client List</h2>
     @if(clients.isEmpty()){
-        <p>No clients to display - get some in your mongo db!</p>
+        <p>@Messages("common.noRecords")</p>
     } else {
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Client Name</th>
-            <th>Action</th>
+            <th>@Messages("client.attributes.name")</th>
+            <th>@Messages("common.actions")</th>
         </tr>
         </thead>
         <tbody>
@@ -26,11 +19,11 @@
                 <td>@client.name</td>
                 <td>
                     |
-                    <a href="@routes.ClientsController.edit(client.id)">Edit</a>
+                    <a href="@routes.ClientsController.edit(client.id)">@Messages("common.edit")</a>
                     |
-                    <a href="@routes.ClientsController.show(client.id)">Show</a>
+                    <a href="@routes.ClientsController.show(client.id)">@Messages("common.show")</a>
                     |
-                    <a href="@routes.ClientsController.delete(client.id)">Delete</a>
+                    <a href="@routes.ClientsController.delete(client.id)">@Messages("common.delete")</a>
                     |
                 </td>
             </tr>
