@@ -113,7 +113,7 @@ public class SitesController extends Controller {
 
         String searchTerm = request().getQueryString("search");
         List<Client> clients = clientDao.searchOrNone(searchTerm, "{name: 1}");
-        List<Client> associatedClients = siteDao.clients("{name: 1}");
+        List<Client> associatedClients = siteDao.clients(site.id,"{name: 1}");
         if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
     }

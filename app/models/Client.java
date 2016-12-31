@@ -6,4 +6,6 @@ public class Client extends Base {
 
     @Constraints.Required
     public String name;
+    public String siteId;
+    
 }

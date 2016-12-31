@@ -41,10 +41,7 @@ public class SiteDao extends BaseDao {
         }
     }
 
-    public List<Client> clients(String sortString){
-        // Craig, I've started this for you, this returns all clients.
-        // You need to change this to bring back only the associated clients
-        // to this site, making using of the clientIds property of this class.
-      return (List<Client>) BaseDao.toList(clientDao.mongoCollection.find().sort(sortString).as(Client.class));
+    public List<Client> clients(String id, String sortString){
+      return (List<Client>) BaseDao.toList(clientDao.mongoCollection.find("{site:#}", id).sort(sortString).as(Client.class));
     }
 }
