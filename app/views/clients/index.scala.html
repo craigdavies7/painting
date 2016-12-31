@@ -1,4 +1,5 @@
 @(clients: List[models.Client])
+
 @main(Messages("client.index")) {
     <p>
         <a href="@routes.ClientsController.newClient" class="btn btn-success">@Messages("client.new")</a>

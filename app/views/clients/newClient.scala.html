@@ -1,16 +1,10 @@
 @(form: Form[models.Client])
+
 @main("New Client") {
 
-    @if(form.hasGlobalErrors) {
-        <p class="panel panel-danger">
-            @for(error <- form.globalErrors) {
-                <p>@Messages(error.messages, error.arguments.toArray: _*)</p>
-            }
-        </p>
-    }
-
     @helper.form(action = routes.ClientsController.create(), 'class -> "form") {
-        @helper.inputText(form("name"), '_label -> "Name: ", 'class -> "form-control")
-        <button type="submit" class="btn btn-primary">Save</button>
+
+        @partials.form(form)
+
     }
 }
