@@ -1,0 +1,1 @@
+db.clients.createIndex({content: "text", "name": "text"},{name: "ClientsSearchIndex"})

@@ -1,0 +1,1 @@
+db.sites.createIndex({content: "text", "name": "text", "description": "text"},{name: "SitesSearchIndex"})

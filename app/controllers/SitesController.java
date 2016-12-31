@@ -2,6 +2,8 @@ package controllers;
 
 import models.Client;
 import models.Site;
+import models.dao.ClientDao;
+import models.dao.SiteDao;
 import org.jongo.MongoCursor;
 import play.data.Form;
 import play.data.FormFactory;
@@ -20,16 +22,20 @@ import java.util.Map;
 public class SitesController extends Controller {
     private FormFactory formFactory;
     private Form<Site> siteForm;
+    private SiteDao siteDao;
+    private ClientDao clientDao;
 
     @Inject
-    public SitesController(FormFactory formFactory){
+    public SitesController(FormFactory formFactory, SiteDao siteDao, ClientDao clientDao){
         this.formFactory = formFactory;
         this.siteForm = formFactory.form(Site.class);
+        this.siteDao = siteDao;
+        this.clientDao = clientDao;
     }
 
     public Result index() {
         String searchTerm = request().getQueryString("search");
-        List<Site> sites = Site.search(searchTerm, null);
+        List<Site> sites = siteDao.search(searchTerm, "{name: 1}");
         if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.index.render(sites, searchTerm));
     }
@@ -40,7 +46,7 @@ public class SitesController extends Controller {
     }
 
     public Result edit(String id){
-        Site site = Site.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -49,7 +55,7 @@ public class SitesController extends Controller {
     }
 
     public Result show(String id){
-        Site site = Site.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -63,14 +69,14 @@ public class SitesController extends Controller {
         } else {
             // save the data
             Site site = siteForm.get();
-            site.save();
+            siteDao.save(site);
             flash("success", "The site was created successfully.");
             return redirect(routes.SitesController.index());
         }
     }
 
     public Result update(String id){
-        Site site = Site.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
@@ -83,36 +89,32 @@ public class SitesController extends Controller {
             // we need to get the form site, and set it's id using our looked up site
             Site updatedSite = siteForm.get();
             updatedSite.id = site.id;
-            updatedSite.save();
+            siteDao.save(updatedSite);
             flash("success", "The site was updated successfully.");
             return redirect(routes.SitesController.index());
         }
     }
 
     public Result delete(String id){
-        Site site = Site.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null){
             return notFound();
         }
-        site.delete();
+        siteDao.delete(site);
         flash("success", "The site was deleted successfully.");
         return redirect(routes.SitesController.index());
     }
 
     public Result manageClients(String id) {
-        Site site = Site.findById(id);
+        Site site = siteDao.findById(id);
         if (site == null) {
             return notFound();
         }
 
         String searchTerm = request().getQueryString("search");
-        List<Client> clients = new ArrayList<>();
-        if (searchTerm != null){
-            clients = Client.search(searchTerm, "{name: 1}");
-        } else {
-            searchTerm = "";
-        }
-        List<Client> associatedClients = site.clients("{name: 1}");
+        List<Client> clients = clientDao.searchOrNone(searchTerm, "{name: 1}");
+        List<Client> associatedClients = siteDao.clients(site.id,"{name: 1}");
+        if (searchTerm == null) searchTerm = "";
         return ok(views.html.sites.manageClients.render(id, clients, associatedClients, searchTerm));
     }
 }
